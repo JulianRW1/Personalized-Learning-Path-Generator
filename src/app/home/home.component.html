@@ -1,0 +1,23 @@
+<nav class="navbar">
+    <div class="navbar-brand">
+      <h1>Learnify</h1>
+    </div>
+    <ul class="nav-links">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/saved">Saved</a></li>
+      <li><a routerLink="/profile">Profile</a></li>
+      <li><a routerLink="/login">Login</a></li>
+    </ul>
+  </nav>
+  <div class="hero">
+    <div class="hero-content">
+      <div class="profile-picture"></div>
+      <div class="welcome-text">
+        <h2>Welcome, {{ userName }}</h2>
+        <span class="role">Student</span>
+        <p>Begin your learning journey by filling out the form below</p>
+        <button class="get-started" (click)="onGetStarted()">Get Started</button>
+      </div>
+    </div>
+  </div>
+  
