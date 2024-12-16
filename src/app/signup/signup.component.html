@@ -1,0 +1,47 @@
+<div class="body"> 
+  <nav class="signup-navbar">
+    <div class="signup-navbar-center">
+      <h1 class="navbar-title">LEARNIFY</h1>
+      <div class="navbar-logo">
+        <img src="/learnifylogo.png" alt="Learnify Logo" />
+      </div>
+    </div>
+  </nav>
+
+  <div class="signup-container">
+      <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
+        <label>First Name</label>
+        <input type="text" formControlName="firstName" />
+    
+        <label>Last Name</label>
+        <input type="text" formControlName="lastName" />
+    
+        <label>Email</label>
+        <input type="email" formControlName="email" />
+    
+        <label>Password</label>
+        <input type="password" formControlName="password" />
+    
+        <label>Verify Password</label>
+        <input type="password" formControlName="verifyPassword" />
+    
+        <label>Role</label>
+        <select formControlName="role">
+          <option>Student</option>
+          <option>Educator</option>
+          <option>Business</option>
+          <option>Other</option>
+        </select>
+    
+        <label>Technical Skills</label>
+        <div *ngFor="let skill of skills">
+          <input type="checkbox" [value]="skill" (change)="onSkillChange($event)" /> {{ skill }}
+        </div>
+    
+        <label>Skills to Learn</label>
+        <input type="text" placeholder="E.g. C++, Data Structures" formControlName="skillsToLearn" />
+    
+        <button type="submit" [disabled]="!signupForm.valid">Create Account</button>
+      </form>
+    </div>
+</div>

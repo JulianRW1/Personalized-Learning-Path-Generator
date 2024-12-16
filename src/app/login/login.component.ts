@@ -1,72 +1,57 @@
+
 // import { Component } from '@angular/core';
+// import { CommonModule } from '@angular/common'; // Import CommonModule for Angular directives
+// import { Router } from '@angular/router';
 
 // @Component({
 //   selector: 'app-login',
-//   imports: [],
+//   standalone: true,
+//   imports: [CommonModule], // Add CommonModule here
 //   templateUrl: './login.component.html',
-//   styleUrl: './login.component.css'
+//   styleUrls: ['./login.component.css']
 // })
-// export class LoginComponent {
 
+// export class LoginComponent {
+//   constructor(private router: Router) {}
+//   onLogin() {
+//     // Perform login logic here
+//     this.router.navigate(['/home']);
+//   }
 // }
+
 
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Import CommonModule for Angular directives
+import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule], // Add CommonModule here
+  imports: [CommonModule, ReactiveFormsModule], // Add CommonModule here
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-
 export class LoginComponent {
-  showRecommendations = false; // Control the visibility of the recommendations
-  recommendedCourses = [
-    {
-      title: 'Introduction to Machine Learning',
-      rating: 4.8,
-      comments: [
-        'This course is amazing!',
-        'Helped me understand the basics of ML.',
-        'Highly recommend for beginners.'
-      ]
-    },
-    {
-      title: 'Advanced Data Science',
-      rating: 4.5,
-      comments: [
-        'Challenging but rewarding.',
-        'Great explanations of complex topics.',
-        'A must for aspiring data scientists.'
-      ]
-    },
-    {
-      title: 'Web Development Bootcamp',
-      rating: 4.9,
-      comments: [
-        'Best course for web development.',
-        'Covers everything you need to know.',
-        'Fantastic hands-on projects.'
-      ]
-    }
-  ];
+  loginForm: FormGroup;
 
-  constructor(private router: Router) {}
-
-  // Display recommendations with a delay for animation
-  ngOnInit() {
-    setTimeout(() => {
-      this.showRecommendations = true;
-    }, 500); // Delay for 500ms to trigger animation
+  constructor(private fb: FormBuilder, private router: Router) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]]
+    });
   }
 
-  // Handle user login and redirect to home page
   onLogin() {
-    // Perform login logic here
-    this.router.navigate(['/home']);
+    const { email, password } = this.loginForm.value;
+
+    // Mock storage check - Replace with backend authentication
+    const user = JSON.parse(localStorage.getItem(email) || '{}');
+    if (user.password === password) {
+      alert('Login successful!');
+      this.router.navigate(['/profile']); // Route to profile
+    } else {
+      alert('Invalid email or password');
+    }
   }
 }
-
