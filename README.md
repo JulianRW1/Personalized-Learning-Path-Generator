@@ -57,3 +57,25 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+
+# Using the API
+
+## Installation:
+
+Make sure you have python 3.12 or greater and the following python modules installed in your environment:
+ - flask
+ - flask_smorest
+ - bson
+ - pymongo
+
+## Running the API Server: 
+
+In a terminal, navigate to the python-api directory and enter the following command, using the api database admin account information: 
+```bash
+flask --app 'app:create_app("<username>", "<password>")' run
+```
+
+## Accessing the API Documentation: 
+
+Once the server is running, open a browser and navigate to (http://127.0.0.1:5000/docs) to view the documentation
