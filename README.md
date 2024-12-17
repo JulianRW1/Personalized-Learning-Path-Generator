@@ -66,7 +66,6 @@ For more information on using the Angular CLI, including detailed command refere
 Make sure you have python 3.12 or greater and the following python modules installed in your environment:
  - flask
  - flask_smorest
- - bson
  - pymongo
 
 ## Running the API Server: 
