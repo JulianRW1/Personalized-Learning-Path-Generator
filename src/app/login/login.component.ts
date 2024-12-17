@@ -1,57 +1,27 @@
+import * as angular from 'angular';
 
-// import { Component } from '@angular/core';
-// import { CommonModule } from '@angular/common'; // Import CommonModule for Angular directives
-// import { Router } from '@angular/router';
+// Define the LoginComponent for AngularJS
+export const LoginComponent = {
+  templateUrl: './login.component.html',  // Path to the HTML template
+  controller: function($state: angular.ui.IStateService) {
+    // Define form model
+    this.loginForm = {
+      email: '',
+      password: ''
+    };
 
-// @Component({
-//   selector: 'app-login',
-//   standalone: true,
-//   imports: [CommonModule], // Add CommonModule here
-//   templateUrl: './login.component.html',
-//   styleUrls: ['./login.component.css']
-// })
+    // Method to handle form submission
+    this.onLogin = () => {
+      const { email, password } = this.loginForm;
 
-// export class LoginComponent {
-//   constructor(private router: Router) {}
-//   onLogin() {
-//     // Perform login logic here
-//     this.router.navigate(['/home']);
-//   }
-// }
-
-
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Import CommonModule for Angular directives
-import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-
-@Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule], // Add CommonModule here
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
-})
-export class LoginComponent {
-  loginForm: FormGroup;
-
-  constructor(private fb: FormBuilder, private router: Router) {
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
-    });
+      // Mock storage check - Replace with backend authentication
+      const user = JSON.parse(localStorage.getItem(email) || '{}');
+      if (user && user.password === password) {
+        alert('Login successful!');
+        $state.go('profile');  // Navigate to profile state using ui-router
+      } else {
+        alert('Invalid email or password');
+      }
+    };
   }
-
-  onLogin() {
-    const { email, password } = this.loginForm.value;
-
-    // Mock storage check - Replace with backend authentication
-    const user = JSON.parse(localStorage.getItem(email) || '{}');
-    if (user.password === password) {
-      alert('Login successful!');
-      this.router.navigate(['/profile']); // Route to profile
-    } else {
-      alert('Invalid email or password');
-    }
-  }
-}
+};

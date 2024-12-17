@@ -1,41 +1,25 @@
-// import { Component } from '@angular/core';
-// import { Router } from '@angular/router';
+import * as angular from 'angular';
+import { IStateService } from '@uirouter/angularjs';  // Importing the correct type for $state
 
-// @Component({
-//   selector: 'app-welcome',
-//   imports: [],
-//   templateUrl: './welcome.component.html',
-//   styleUrl: './welcome.component.css'
-// })
-// export class WelcomeComponent {
-//   constructor(private router: Router) {}
-// }
+export const LoginComponent = {
+  templateUrl: './login.component.html',  // Path to HTML template
+  controller: function($state: IStateService) {
+    this.loginForm = {
+      email: '',
+      password: ''
+    };
 
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+    this.onLogin = () => {
+      const { email, password } = this.loginForm;
 
-@Component({
-  selector: 'app-welcome',
-  standalone: true,
-  templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.css']
-})
-// export class WelcomeComponent {
-//   constructor(private router: Router) {}
-
-//   // onGetStarted() {
-//   //   this.router.navigate(['/login']);
-//   // }
-// }
-
-export class WelcomeComponent {
-  constructor(private router: Router) {}
-
-  navigateToLogin() {
-    this.router.navigate(['/login']).then((navigated) => {
-      console.log(navigated ? 'Navigated to /login' : 'Navigation failed');
-    });
+      // Mock storage check - Replace with backend authentication
+      const user = JSON.parse(localStorage.getItem(email) || '{}');
+      if (user && user.password === password) {
+        alert('Login successful!');
+        $state.go('profile');  // Use $state to navigate to the profile state
+      } else {
+        alert('Invalid email or password');
+      }
+    };
   }
-}
-
-
+};

@@ -1,47 +1,46 @@
 import * as angular from 'angular';
-import '@uirouter/angularjs';  // Import ui-router
-
-// Import Components
+import '@uirouter/angularjs';  // Import ui-router module
+import { WelcomeComponent } from './welcome/welcome.component'; // Import your component
 import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
-import { WelcomeComponent } from './welcome/welcome.component';
+import { SignupComponent } from './signup/signup.component';
 import { ProfileComponent } from './profile/profile.component';
 
-// Create AngularJS module
-export const appModule = angular.module('app', ['ui.router'])
+const appModule = angular.module('app', ['ui.router'])  // Include ui.router as a dependency
+  .config(($stateProvider: any, $urlRouterProvider: any) => {
+    // Default route
+    $urlRouterProvider.otherwise('/welcome');  // Redirect to /welcome if no matching route is found
 
-// Register Components
-  .component('welcome', WelcomeComponent)
-  .component('login', LoginComponent)
-  .component('signup', SignupComponent)
-  .component('home', HomeComponent)
-  .component('profile', ProfileComponent)
-
-  // Configure states using ui-router
-  .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/welcome');  // Default redirect
-
-    // Define states
+    // Define states (routes)
     $stateProvider
       .state('welcome', {
         url: '/welcome',
-        component: 'welcome'  // Use 'welcome' component
+        component: 'welcome'  // Link to the WelcomeComponent
       })
       .state('login', {
         url: '/login',
-        component: 'login'  // Use 'login' component
+        component: 'login'  // Link to the LoginComponent
       })
       .state('home', {
         url: '/home',
-        component: 'home'  // Use 'home' component
+        component: 'home'  // Link to the HomeComponent
       })
       .state('signup', {
         url: '/signup',
-        component: 'signup'  // Use 'signup' component
+        component: 'signup'  // Link to the SignupComponent
       })
       .state('profile', {
         url: '/profile',
-        component: 'profile'  // Use 'profile' component
+        component: 'profile'  // Link to the ProfileComponent
       });
-  }]);
+  });
+
+// Register your components within the same file or another component-specific file.
+appModule.component('welcome', WelcomeComponent);
+appModule.component('login', LoginComponent);
+appModule.component('home', HomeComponent);
+appModule.component('signup', SignupComponent);
+appModule.component('profile', ProfileComponent);
+
+// Finally, bootstrap the app (in AngularJS, we do it here directly)
+angular.bootstrap(document, ['app']);

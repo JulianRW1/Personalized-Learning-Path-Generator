@@ -1,5 +1,3 @@
-/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
-/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
   "compileOnSave": false,
   "compilerOptions": {
@@ -13,10 +11,18 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",  // Ensure module resolution is set to "node"
     "importHelpers": true,
     "target": "ES2022",
-    "module": "ES2022"
+    "module": "ES2022",
+    "typeRoots": [
+      "./node_modules/@types",  // Add the node_modules/@types directory
+      "./node_modules"  // Ensure the standard node_modules is included for type resolution
+    ],
+    "types": [
+      "node",  // Include node types if necessary
+      "@types/ui-router__angularjs"  // Explicitly include types for ui-router
+    ]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -24,7 +30,7 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-    "include": [
+  "include": [
     "src/**/*.ts"
   ]
 }
