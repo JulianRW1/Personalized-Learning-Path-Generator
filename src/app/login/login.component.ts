@@ -49,9 +49,15 @@ export class LoginComponent {
     const user = JSON.parse(localStorage.getItem(email) || '{}');
     if (user.password === password) {
       alert('Login successful!');
-      this.router.navigate(['/profile']); // Route to profile
-    } else {
-      alert('Invalid email or password');
+      this.router.navigate(['/home']); // Route to profile
+    }else {
+      // Invalid credentials
+      alert('Invalid email or password. Please try again or create a new account.');
     }
+  }
+
+  onCreateAccount() {
+    // Navigate to the signup component programmatically
+    this.router.navigate(['/signup']);
   }
 }

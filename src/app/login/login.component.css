@@ -70,7 +70,7 @@ button[type="submit"]:disabled {
 }
 
 /* Links section */
-.links {
+/* .links {
   margin-top: 15px;
   text-align: center;
 }
@@ -86,6 +86,28 @@ button[type="submit"]:disabled {
 .links a:hover {
   text-decoration: none;
   cursor: pointer;
+} */
+
+.links {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.links button {
+  background: none; /* Removes button background */
+  border: none; /* Removes button border */
+  color: #000; /* Match text color to link color */
+  text-decoration: underline; /* Add underline to resemble a link */
+  font-size: 14px;
+  cursor: pointer; /* Change cursor to pointer */
+  padding: 0; /* Remove default padding */
+  margin: 5px 0; /* Match margin with your original style */
+  font-family: inherit; /* Match button font with parent font */
+}
+
+.links button:hover {
+  text-decoration: none; /* Remove underline on hover */
+  color: #4a90e2; /* Optional: Change color on hover for visual feedback */
 }
 
 /* Navbar Styling */

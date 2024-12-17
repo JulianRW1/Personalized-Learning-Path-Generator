@@ -19,7 +19,7 @@
       <button type="submit" [disabled]="!loginForm.valid">Sign In</button>
 
       <div class="links">
-        <a routerLink="/signup">Create New Account</a>
+        <button type="button" (click)="onCreateAccount()">Create New Account</button>
       </div>
     </form>
   </div>
