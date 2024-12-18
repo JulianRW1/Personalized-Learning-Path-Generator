@@ -58,6 +58,32 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
 
+# Running the Server
+
+Make sure to have two terminals going, one in the main server and one specifically in the backend folder.
+
+## For the backend:
+
+Make sure to have the mongodb-community package installed and then in a normal terminal type:
+
+```bash
+$ brew services start mongodb/brew/mongodb-community
+```
+
+Then, in the backend terminal:
+
+```bash
+$ node app.js
+```
+
+Make sure to have node and mongodb installed, and then 
+## For the server:
+
+```bash
+$ ng serve -o
+```
+
+If components are missing, make sure to type in the ng build command above to download necessary components. 
 
 # Using the API
 
