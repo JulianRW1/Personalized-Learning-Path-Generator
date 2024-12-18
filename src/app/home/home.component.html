@@ -15,11 +15,117 @@
   <div class="hero-content">
     <div class="profile-picture"></div>
     <div class="welcome-text">
-      <h2>Welcome, {{ userName }}</h2>
-      <span class="role">Student</span>
+      <h2>Welcome, {{ user.firstName }}</h2>
+      <p>{{ user.role }}</p>
       <p>Begin your learning journey by filling out the form below</p>
-      <button class="get-started" (click)="onGetStarted()">Get Started</button>
     </div>
   </div>
 </div>
+
+
+<div class="home-container">
+  <!-- Customize Your Learning Path Section -->
+  <section class="customize-learning-path">
+    <h1>Customize Your Learning Path</h1>
+    <p class="subtext">
+      Tell us about your skills, interests, and goals to receive personalized recommendations
+    </p>
+
+    <!-- User Information -->
+    <div class="info-section">
+      <div class="info-box">
+        <strong>Technical Skills</strong>
+        <p>{{ user.technicalSkills?.join(', ') || 'Separate with commas' }}</p>
+      </div>
+      <div class="info-box">
+        <strong>Topics of Interest</strong>
+        <p>{{ user.skillsToLearn?.join(', ') || 'Separate with commas' }}</p>
+      </div>
+      <div class="info-box">
+        <strong>Goals</strong>
+        <p>{{ user.goals || 'Placed here' }}</p>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="button-group">
+      <button class="reset-btn" (click)="openEditForm()">Reset</button>
+      <button class="recommend-btn" (click)="getRecommendations()">Get Recommendations</button>
+    </div>
+  </section>
+
+<hr>
+
+  <!-- Courses in Progress Section -->
+<h2 class="course-section-title">Courses in Progress</h2>
+<div class="section-container" *ngIf="coursesInProgress.length > 0; else noCourses">
+  <div class="course-card" *ngFor="let course of coursesInProgress">
+    <img src="book-icon.png" alt="Book Icon" class="icon-image" />
+    <div class="course-title">{{ course.title }}</div>
+    <div class="course-status">In Progress</div>
+  </div>
+</div>
+
+<!-- Placeholder for no courses -->
+<ng-template #noCourses>
+  <h3 class="nocourses">START A NEW COURSE TODAY</h3>
+</ng-template>
+
+<hr>
+
+<!-- Recommended Courses Section -->
+<h2 class="recommended-courses">Recommended Courses</h2>
+<div class="section-container">
+  <div class="course-card" *ngFor="let course of recommendedCourses">
+    <img src="star-icon.png" alt="Star Icon" class="icon-image" />
+    <div class="course-title">{{ course.title }}</div>
+    <div class="course-status">Suggested for you</div>
+  </div>
+</div>
+<!-- Placeholder for no courses -->
+<ng-template #noRecommendations>
+  <h3 class="norecommendation">NO RECOMMENDATIONS YET</h3>
+  <span> click Get Recommendations to generate course recommendations</span>
+</ng-template>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Contact Us &nbsp;&nbsp; | &nbsp;&nbsp; About &nbsp;&nbsp; | &nbsp;&nbsp; FAQs</p>
+  </footer>
+
+  <!-- Edit Form Popup -->
+  <div class="popup-overlay" *ngIf="isEditFormOpen">
+    <div *ngIf="isEditFormOpen" class="edit-form">
+      <label>Technical Skills:</label>
+      <input type="text" [(ngModel)]="editForm.technicalSkills" placeholder="Enter skills" />
+      <p></p>
+
+      <label>Topics of Interest:</label>
+      <input type="text" [(ngModel)]="editForm.skillsToLearn" placeholder="Enter topics of interest" />
+      <p></p>
+
+      <label>Goals:</label>
+      <input type="text" [(ngModel)]="editForm.goals" placeholder="Enter your goals" />
+      <p></p>
+      <div class="popup-btn">
+        <button (click)="saveEditForm()" class="save-btn">Save</button>
+        <button (click)="closeEditForm()" class="close-btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Course Details Popup -->
+  <div class="popup-overlay" *ngIf="selectedCourse">
+    <div class="popup-content">
+      <h2>{{ selectedCourse.title }}</h2>
+      <p>{{ selectedCourse.description || 'No description available.' }}</p>
+      <a [href]="selectedCourse.link" target="_blank">Go to Course Website</a>
+      <button class="start-course-btn" (click)="startCourse(selectedCourse)">
+        Start Course
+      </button>
+      <button class="close-btn" (click)="closeCoursePopup()">Close</button>
+    </div>
+  </div>
+
 

@@ -1,60 +1,41 @@
-/* Navigation Bar */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: white;
-    color: black;
-    border-bottom: 1px solid #ccc;
-    font-family: Arial, sans-serif;
-  }
-  
-  .navbar-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .navbar-logo {
-    width: 40px; /* Set logo width */
-    height: 40px; /* Set logo height */
-    /* Removed circle styles, no background-color, border-radius, etc. */
-  }
-  
-  .navbar-logo img {
-    width: 100%; /* Make the image fill the container */
-    height: 100%; /* Make the image fill the container */
-    object-fit: contain; /* Maintain aspect ratio and fit within the container */
-  }
-  
-  .navbar-title {
-    font-size: 1.2rem;
-    font-weight: 500;
-    margin: 0;
-  }
-  
-  .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .nav-links li {
-    display: inline;
-  }
-  
-  .nav-links a {
-    color: black;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s;
-  }
-  
-  .nav-links a:hover {
-    color: #007BFF;
-    cursor: pointer;
-  }
-  
+  width: auto;
+  height: 50px;
+  background-color: #333333;
+  display: flex;
+  justify-content: space-between; /* Space between the center and the right section */
+  align-items: center;
+  color: #ffffff;
+  padding: 0 20px; /* Add padding on the left and right for spacing */
+}
+
+.navbar-center {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-title {
+  font-size: 1.5rem;
+  margin-right: 10px;
+}
+
+.navbar-logo img {
+  height: 30px;
+}
+
+.navbar-links {
+  display: flex;
+  justify-content: flex-end; /* Align links to the right */
+  align-items: center;
+}
+
+.navbar-link {
+  color: #ffffff;
+  text-decoration: none;
+  margin-left: 20px; /* Space between links */
+  font-size: 1rem;
+}
+
+.navbar-link:hover {
+  color: #ffcc00; /* Hover effect */
+}

@@ -1,4 +1,4 @@
-<div class="body"> 
+<div class="body">
   <nav class="signup-navbar">
     <div class="signup-navbar-center">
       <h1 class="navbar-title">LEARNIFY</h1>
@@ -8,40 +8,59 @@
     </div>
   </nav>
 
-  <div class="signup-container">
-      <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
-        <label>First Name</label>
-        <input type="text" formControlName="firstName" />
-    
-        <label>Last Name</label>
-        <input type="text" formControlName="lastName" />
-    
-        <label>Email</label>
-        <input type="email" formControlName="email" />
-    
-        <label>Password</label>
-        <input type="password" formControlName="password" />
-    
-        <label>Verify Password</label>
-        <input type="password" formControlName="verifyPassword" />
-    
-        <label>Role</label>
-        <select formControlName="role">
-          <option>Student</option>
-          <option>Educator</option>
-          <option>Business</option>
-          <option>Other</option>
-        </select>
-    
-        <label>Technical Skills</label>
-        <div *ngFor="let skill of skills">
-          <input type="checkbox" [value]="skill" (change)="onSkillChange($event)" /> {{ skill }}
-        </div>
-    
-        <label>Skills to Learn</label>
-        <input type="text" placeholder="E.g. C++, Data Structures" formControlName="skillsToLearn" />
-    
-        <button type="submit" [disabled]="!signupForm.valid">Create Account</button>
-      </form>
+ <div class="signup-container">
+    <div class="logo-container">
+      <img src="learnifylogo.png" alt="Learnify Logo" class="logo" />
     </div>
+
+    <h2>Create Your Account</h2>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
+      <label for="firstName">First Name</label>
+      <input id="firstName" type="text" formControlName="firstName" placeholder="Enter your first name" />
+
+      <label for="lastName">Last Name</label>
+      <input id="lastName" type="text" formControlName="lastName" placeholder="Enter your last name" />
+
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email" placeholder="Enter your email" />
+
+      <label for="password">Password</label>
+      <input id="password" type="password" formControlName="password" placeholder="Enter your password" />
+
+      <label for="verifyPassword">Verify Password</label>
+      <input id="verifyPassword" type="password" formControlName="verifyPassword" placeholder="Verify your password" />
+
+      <label for="role">Role</label>
+      <select id="role" formControlName="role">
+        <option value="" disabled selected>Select your role</option>
+        <option>Student</option>
+        <option>Educator</option>
+        <option>Business</option>
+        <option>Other</option>
+      </select>
+
+      <label for="technicalSkills">Technical Skills</label>
+      <select
+        id="technicalSkills"
+        formControlName="technicalSkills"
+        multiple
+        (change)="onMultiSelectChange('technicalSkills', $event)"
+      >
+        <option *ngFor="let skill of technicalSkillsOptions" [value]="skill">{{ skill }}</option>
+      </select>
+
+      <label for="skillsToLearn">Skills to Learn</label>
+      <select
+        id="skillsToLearn"
+        formControlName="skillsToLearn"
+        multiple
+        (change)="onMultiSelectChange('skillsToLearn', $event)"
+      >
+        <option *ngFor="let skill of skillsToLearnOptions" [value]="skill">{{ skill }}</option>
+      </select>
+
+      <button type="submit" [disabled]="!signupForm.valid">Create Account</button>
+    </form>
+  </div>
 </div>
