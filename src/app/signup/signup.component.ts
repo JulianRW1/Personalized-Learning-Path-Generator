@@ -21,11 +21,10 @@ export class SignupComponent {
     'Node.js', 'Databases', 'Cloud Computing', 'Cybersecurity',
   ];
 
-  skillsToLearnOptions = [
-    'AI and Machine Learning', 'Blockchain', 'Big Data', 'DevOps',
-    'UI/UX Design', 'IoT (Internet of Things)', 'AR/VR',
-    'Web Development', 'Mobile App Development', 'Game Development',
-    'Quantum Computing',
+  topicsOfInterestOptions = [
+    'machine-learning', 'data-analysis', 'web-development', 'python',
+    'cybersecurity', 'ios-development', 'unix',
+    'html', 'javascript', 'css', 'nodeJS'
   ];
 
   constructor(private fb: FormBuilder, private router: Router) {
@@ -37,12 +36,12 @@ export class SignupComponent {
       verifyPassword: ['', Validators.required],
       role: ['', Validators.required],
       technicalSkills: [[]], // Store selected options as an array
-      skillsToLearn: [[]],   // Store selected options as an array
+      topicsOfInterest: [[]],   // Store selected options as an array
     });
   }
 
   // Update multi-select value
-  // onMultiSelectChange(controlName: 'technicalSkills' | 'skillsToLearn', options: HTMLOptionsCollection): void {
+  // onMultiSelectChange(controlName: 'technicalSkills' | 'topicsOfInterest', options: HTMLOptionsCollection): void {
   //   const selectedValues = Array.from(selectedOptions)
   //     .filter(option => option.selected)
   //     .map(option => option.value);
@@ -112,7 +111,7 @@ export class SignupComponent {
 //     'Node.js', 'Databases', 'Cloud Computing', 'Cybersecurity',
 //   ];
 
-//   skillsToLearnOptions = [
+//   topicsOfInterestOptions = [
 //     'AI and Machine Learning', 'Blockchain', 'Big Data', 'DevOps',
 //     'UI/UX Design', 'IoT (Internet of Things)', 'AR/VR',
 //     'Web Development', 'Mobile App Development', 'Game Development',
@@ -128,7 +127,7 @@ export class SignupComponent {
 //       verifyPassword: ['', Validators.required],
 //       role: ['', Validators.required],
 //       technicalSkills: [[]], // Store selected options as an array
-//       skillsToLearn: [[]],   // Store selected options as an array
+//       topicsOfInterest: [[]],   // Store selected options as an array
 //     });
 //   }
 

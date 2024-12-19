@@ -50,14 +50,14 @@
         <option *ngFor="let skill of technicalSkillsOptions" [value]="skill">{{ skill }}</option>
       </select>
 
-      <label for="skillsToLearn">Skills to Learn</label>
+      <label for="topicsOfInterest">Topics of Interest</label>
       <select
-        id="skillsToLearn"
-        formControlName="skillsToLearn"
+        id="topicsOfInterest"
+        formControlName="topicsOfInterest"
         multiple
-        (change)="onMultiSelectChange('skillsToLearn', $event)"
+        (change)="onMultiSelectChange('topicsOfInterest', $event)"
       >
-        <option *ngFor="let skill of skillsToLearnOptions" [value]="skill">{{ skill }}</option>
+        <option *ngFor="let skill of topicsOfInterestOptions" [value]="skill">{{ skill }}</option>
       </select>
 
       <button type="submit" [disabled]="!signupForm.valid">Create Account</button>
