@@ -24,6 +24,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Import CommonModule for Angular directives
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
+import { catchError, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -35,7 +38,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]]
@@ -45,15 +48,19 @@ export class LoginComponent {
   onLogin() {
     const { email, password } = this.loginForm.value;
 
-    // Mock storage check - Replace with backend authentication
-    const user = JSON.parse(localStorage.getItem(email) || '{}');
-    if (user.password === password) {
-      alert('Login successful!');
-      this.router.navigate(['/home']); // Route to profile
-    }else {
-      // Invalid credentials
-      alert('Invalid email or password. Please try again or create a new account.');
-    }
+    this.authService.login(email, password).pipe(
+      tap(response => {
+        console.log('Login successful', response);
+        localStorage.setItem('token', response.token);  // Save JWT token
+        this.router.navigate(['/home']);
+      }),
+      catchError(error => {
+        console.error('Login failed', error);
+        alert('Login failed')
+        // Handle the error properly (e.g., show an error message to the user)
+        return of(null); // Return an observable so the flow continues
+      })
+    ).subscribe();
   }
 
   onCreateAccount() {

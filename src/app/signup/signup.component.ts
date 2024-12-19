@@ -3,6 +3,15 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+<<<<<<< HEAD
+=======
+import { CommonModule } from '@angular/common'; // Import CommonModule for Angular directives
+import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from '../auth.service';
+import { catchError, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
+
+>>>>>>> 2d6d3b7630ecd6952a74fea2c02bc4167ef1bf01
 
 @Component({
   selector: 'app-signup',
@@ -28,7 +37,7 @@ export class SignupComponent {
     'Quantum Computing',
   ];
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
     this.signupForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -69,6 +78,7 @@ export class SignupComponent {
       return;
     }
 
+<<<<<<< HEAD
     const formData = this.signupForm.value;
 
     // Verify passwords match
@@ -83,5 +93,20 @@ export class SignupComponent {
 
     // Redirect to login page
     this.router.navigate(['/home']);
+=======
+    // Store user info in localStorage (simulate backend)
+    this.authService.signup(formData.password, formData.email, formData.firstName, formData.lastName).pipe(
+      tap(response => {
+        console.log('Registration successful', response);
+        this.router.navigate(['/login']);
+      }),
+      catchError(error => {
+        console.error('Registration failed', error);
+        alert('Registration failed');
+        // Handle error (e.g., show an error message)
+        return of(null); // Continue the observable chain
+      })
+    ).subscribe();
+>>>>>>> 2d6d3b7630ecd6952a74fea2c02bc4167ef1bf01
   }
 }
