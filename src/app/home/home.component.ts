@@ -1,4 +1,202 @@
-// import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { CommonModule } from '@angular/common'; // Import CommonModule for Angular directives
+import { FormsModule } from '@angular/forms';
+import { CourseService } from '../services/course.service';
+
+@Component({
+  selector: 'app-home',
+  standalone: true,
+  imports: [NavbarComponent, CommonModule, FormsModule],
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css'],
+})
+export class HomeComponent {
+  user: any = {};
+  isEditFormOpen = false;
+  editForm = { technicalSkills: '', skillsToLearn: '', goals: '' };
+
+  coursesInProgress: any[] = [];
+  recommendedCourses: any[] = [];
+  selectedCourse: any;
+
+  constructor(private http: HttpClient, private courseService: CourseService) {
+    this.loadUserData();
+  }
+
+  loadUserData() {
+    const email = localStorage.key(0) || ''; // Fallback if null
+    const userData = localStorage.getItem(email);
+    if (userData) {
+      this.user = JSON.parse(userData);
+    } else {
+      this.user = {};
+    }
+  }
+
+  openEditForm() {
+    this.editForm = {
+      technicalSkills: this.user.technicalSkills?.join(', ') || '',
+      skillsToLearn: this.user.skillsToLearn?.join(', ') || '',
+      goals: this.user.goals || '',
+    };
+    this.isEditFormOpen = true;
+  }
+
+  saveEditForm() {
+    this.user.technicalSkills = this.editForm.technicalSkills.split(',').map((s) => s.trim());
+    this.user.skillsToLearn = this.editForm.skillsToLearn.split(',').map((s) => s.trim());
+    this.user.goals = this.editForm.goals;
+    localStorage.setItem(this.user.email, JSON.stringify(this.user));
+    this.isEditFormOpen = false;
+  }
+
+  closeEditForm() {
+    this.isEditFormOpen = false;
+  }
+
+  getRecommendations() {
+    const skillsParam = this.user.technicalSkills?.join(',') || '';
+    this.courseService.getCourses(skillsParam).subscribe((data) => {
+      this.recommendedCourses = data;
+    });
+  }
+
+  // getRecommendations() {
+  //   const skillsParam = this.user.technicalSkills?.join(',') || '';
+  //   const apiUrl = `/courses?skills=${skillsParam}`;
+  //   this.http.get<any[]>(apiUrl).subscribe((data) => {
+  //     this.recommendedCourses = data;
+  //   });
+  // }
+
+  openCourse(course: any) {
+    this.selectedCourse = course;
+  }
+
+  closeCoursePopup() {
+    this.selectedCourse = null;
+  }
+
+  startCourse(course: any) {
+    this.coursesInProgress.push(course);
+    this.closeCoursePopup();
+  }
+}
+
+//OLD VERSION
+
+// import { Component } from '@angular/core';
+// import { HttpClient } from '@angular/common/http';
+// import { NavbarComponent } from '../navbar/navbar.component';
+// import { CommonModule } from '@angular/common'; // Import CommonModule for Angular directives
+// import { FormsModule } from '@angular/forms';
+// import { CourseService } from '../services/course.service'; // Adjust path as needed
+
+
+// @Component({
+//   selector: 'app-home',
+//   standalone: true,
+//   imports: [NavbarComponent, CommonModule, FormsModule],
+//   templateUrl: './home.component.html',
+//   styleUrls: ['./home.component.css'],
+// })
+// export class HomeComponent {
+//   user: any = {};
+//   isEditFormOpen = false;
+//   editForm = { technicalSkills: '', skillsToLearn: '', goals: '' };
+
+//   coursesInProgress: any[] = [];
+//   recommendedCourses: any[] = [];
+//   selectedCourse: any;
+
+//   constructor(private http: HttpClient, private courseService: CourseService) {
+//     this.loadUserData();
+//   }
+
+//   loadUserData() {
+//     // Use a specific key or a fallback mechanism
+//     const email = localStorage.key(0) || ''; // Replace with actual logic to get the user's email
+//     const userData = localStorage.getItem(email);
+  
+//     if (userData) {
+//       this.user = JSON.parse(userData);
+//     } else {
+//       console.warn('No user data found in localStorage');
+//       this.user = {};
+//     }
+//   }
+
+//   openEditForm() {
+//     this.editForm = {
+//       technicalSkills: this.user.technicalSkills?.join(', ') || '',
+//       skillsToLearn: this.user.skillsToLearn?.join(', ') || '',
+//       goals: this.user.goals || '',
+//     };
+//     this.isEditFormOpen = true;
+//   }
+
+//   saveEditForm() {
+//     this.user.technicalSkills = this.editForm.technicalSkills.split(',').map((s) => s.trim());
+//     this.user.skillsToLearn = this.editForm.skillsToLearn.split(',').map((s) => s.trim());
+//     this.user.goals = this.editForm.goals;
+//     localStorage.setItem(this.user.email, JSON.stringify(this.user));
+//     this.isEditFormOpen = false;
+//   }
+
+//   closeEditForm() {
+//     this.isEditFormOpen = false;
+//   }
+
+//   getRecommendations() {
+//     const skillsParam = this.user.technicalSkills?.join(',') || '';
+//     this.courseService.getCourses(skillsParam).subscribe((data) => {
+//       this.recommendedCourses = data;
+//     });
+//   }
+
+//   openCourse(course: any) {
+//     this.selectedCourse = course;
+//   }
+
+//   closeCoursePopup() {
+//     this.selectedCourse = null;
+//   }
+
+//   startCourse(course: any) {
+//     this.coursesInProgress.push(course);
+//     this.closeCoursePopup();
+//   }
+// }
+
+// loadUserData() {
+  //   const email = localStorage.key(0) || ''; // Fallback if null
+  //   const userData = localStorage.getItem(email);
+  //   if (userData) {
+  //     this.user = JSON.parse(userData);
+  //   } else {
+  //     this.user = {};
+  //   }
+  // }
+
+ // getRecommendations() {
+  //   const skillsParam = this.user.technicalSkills?.join(',') || '';
+  //   const apiUrl = `/courses?skills=${skillsParam}`;
+  //   this.http.get<any[]>(apiUrl).subscribe((data) => {
+  //     this.recommendedCourses = data;
+  //   });
+  // }
+
+  // getRecommendations() {
+  //   const skillsParam = this.user.technicalSkills?.join(',') || '';
+  //   const apiUrl = `http://127.0.0.1:5000/courses?skills=${skillsParam}`;
+  //   this.http.get<any[]>(apiUrl).subscribe((data) => {
+  //     this.recommendedCourses = data;
+  //   });
+  // }
+
+  // import { Component, OnInit } from '@angular/core';
 // import { CommonModule } from '@angular/common';
 // import { HttpClient, HttpClientModule } from '@angular/common/http';
 // import { NavbarComponent } from '../navbar/navbar.component';
@@ -113,83 +311,3 @@
 //   //   }
     
 //   // }
-
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { NavbarComponent } from '../navbar/navbar.component';
-import { CommonModule } from '@angular/common'; // Import CommonModule for Angular directives
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-@Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [NavbarComponent, CommonModule, FormsModule],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
-})
-export class HomeComponent {
-  user: any = {};
-  isEditFormOpen = false;
-  editForm = { technicalSkills: '', skillsToLearn: '', goals: '' };
-
-  coursesInProgress: any[] = [];
-  recommendedCourses: any[] = [];
-  selectedCourse: any;
-
-  constructor(private http: HttpClient) {
-    this.loadUserData();
-  }
-
-  loadUserData() {
-    const email = localStorage.key(0) || ''; // Fallback if null
-    const userData = localStorage.getItem(email);
-    if (userData) {
-      this.user = JSON.parse(userData);
-    } else {
-      this.user = {};
-    }
-  }
-
-  openEditForm() {
-    this.editForm = {
-      technicalSkills: this.user.technicalSkills?.join(', ') || '',
-      skillsToLearn: this.user.skillsToLearn?.join(', ') || '',
-      goals: this.user.goals || '',
-    };
-    this.isEditFormOpen = true;
-  }
-
-  saveEditForm() {
-    this.user.technicalSkills = this.editForm.technicalSkills.split(',').map((s) => s.trim());
-    this.user.skillsToLearn = this.editForm.skillsToLearn.split(',').map((s) => s.trim());
-    this.user.goals = this.editForm.goals;
-    localStorage.setItem(this.user.email, JSON.stringify(this.user));
-    this.isEditFormOpen = false;
-  }
-
-  closeEditForm() {
-    this.isEditFormOpen = false;
-  }
-
-  getRecommendations() {
-    const skillsParam = this.user.technicalSkills?.join(',') || '';
-    const apiUrl = `/courses?skills=${skillsParam}`;
-    this.http.get<any[]>(apiUrl).subscribe((data) => {
-      this.recommendedCourses = data;
-    });
-  }
-
-  openCourse(course: any) {
-    this.selectedCourse = course;
-  }
-
-  closeCoursePopup() {
-    this.selectedCourse = null;
-  }
-
-  startCourse(course: any) {
-    this.coursesInProgress.push(course);
-    this.closeCoursePopup();
-  }
-}
-
