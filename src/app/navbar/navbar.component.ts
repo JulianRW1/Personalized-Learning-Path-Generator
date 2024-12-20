@@ -22,4 +22,11 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent {
   constructor(private router: Router) {}
+
+  logout(): void {
+    // Perform any necessary cleanup (e.g., clear localStorage, reset state)
+    // localStorage.clear(); 
+    // Navigate to the welcome page
+    this.router.navigate(['/welcome']);
+  }
 }
